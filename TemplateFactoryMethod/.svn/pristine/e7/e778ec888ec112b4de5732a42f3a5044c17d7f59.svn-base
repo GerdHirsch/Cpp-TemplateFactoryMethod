@@ -1,0 +1,16 @@
+/*
+Gerd
+*/
+
+#include "Implementation.h"
+#include "Application.h"
+
+#include<iostream>
+using namespace std;
+
+int main(){
+	cout << "TemplateFactoryMethod" << endl;
+
+	Application app;
+	app.TemplateMethod();
+}
