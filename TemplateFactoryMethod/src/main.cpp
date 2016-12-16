@@ -17,7 +17,8 @@ using Impl2 = Implementation2<Application, MyDocument>;
 int main(){
 	cout << "=== TemplateFactoryMethod ===" << endl;
 
-	Application app;
+	Application application;
+	Interface &app = application;
 	app.printThis();
 
 	cout << "=== app.TemplateMethod() ===" << endl;
@@ -25,9 +26,9 @@ int main(){
 //	cout << "=== app.TemplateMethod_2() ===" << endl;
 //	app.TemplateMethod_2();
 
-//	cout << hex;
-//	cout 	<< "&app: " << &app
-//			<< " Impl1: " << getAdressOf<Impl1>(app)
+	cout << hex;
+	cout 	<< "&app: " << &app
+			<< " Impl1: " << getAdressOf<Impl1>(application)
 //			<< " Impl2: " << getAdressOf<Impl2>(app)
-//			<< endl;
+			<< endl;
 }

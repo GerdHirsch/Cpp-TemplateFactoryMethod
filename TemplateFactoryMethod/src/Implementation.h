@@ -8,10 +8,12 @@
 #ifndef IMPLEMENTATION_H_
 #define IMPLEMENTATION_H_
 
+#include "Interface.h"
+
 #include <iostream>
 
 template<class ConcreteApplication, class Document>
-class Implementation{
+class Implementation : public Interface {
 	using this_type = ConcreteApplication;
 	int i;
 public:
