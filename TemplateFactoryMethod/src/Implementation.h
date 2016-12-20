@@ -10,14 +10,41 @@
 
 #include "Interface.h"
 
+#include <type_traits>
 #include <iostream>
 
 template<class ConcreteApplication, class Document>
 class Implementation : public Interface {
 	using this_type = ConcreteApplication;
+
+//	static_assert(is_base_of<this_type, Implementation>::value, "ConcreteApplication must inherit from Implementation<ConcreteApplication>");
+//	static_assert
+//	(
+//			std::is_base_of
+//							<	Implementation<ConcreteApplication, Document>,
+//								ConcreteApplication
+//							>::value, "message"
+//	);
+
 	int i;
 public:
 	void TemplateMethod(){
+		if(std::is_base_of
+				<	Implementation<ConcreteApplication, Document>,
+					ConcreteApplication
+				>::value)
+			std::cout << "is_base_of: true" << std::endl;
+
+			static_assert
+			(
+				std::is_base_of
+					<	Implementation<ConcreteApplication, Document>,
+						ConcreteApplication
+					>::value, "message"
+			);
+
+
+
 		std::cout << "Implementation::TemplateMethod()" << std::endl;
 		this->NonHookMethod();
 		This()->AbstractHookMethod();
