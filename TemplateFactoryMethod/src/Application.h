@@ -18,6 +18,9 @@ public:
 	MyDocument(){
 		std::cout << "MyDocument::MyDocument()" << std::endl;
 	}
+	void operation1(){
+		std::cout << "MyDocument::operation1()" << std::endl;
+	}
 };
 
 class App2{
@@ -69,6 +72,9 @@ protected:
 	}
 	void HookMethod4_2(){
 		std::cout << "Application::HookMethod4_2()" << std::endl;
+	}
+	static void StaticHookMethod2(){
+		std::cout << "Application::StaticHookMethod2()" << std::endl;
 	}
 	void NonHookMethod(){
 		std::cout << "Application::NonHookMethod()" << std::endl;

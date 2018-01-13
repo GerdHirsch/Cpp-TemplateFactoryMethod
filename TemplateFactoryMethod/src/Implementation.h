@@ -33,7 +33,7 @@ public:
 				<	Implementation<ConcreteApplication, Document>,
 					ConcreteApplication
 				>::value)
-			std::cout << "is_base_of: true" << std::endl;
+			std::cout << "Implementation<ConcreteApplication, Document> is_base_of ConcreteApplication: true" << std::endl;
 
 			static_assert
 			(
@@ -46,14 +46,22 @@ public:
 
 
 		std::cout << "Implementation::TemplateMethod()" << std::endl;
+		std::cout << "---------------------------------" << std::endl;
 		this->NonHookMethod();
 		This()->AbstractHookMethod();
 		This()->HookMethod1();
 		This()->HookMethod2(42);
 		This()->HookMethod4();
+		This()->StaticHookMethod1();
+		This()->StaticHookMethod2();
 
+		std::cout << "---------------------------------" << std::endl;
 		Document d = This()->FactoryMethod();
+		d.operation1();
+
+		std::cout << "---------------------------------" << std::endl;
 		This()->TemplateHookMethod();
+		std::cout << "---------------------------------" << std::endl;
 	}
 protected:
 	void printThis(){
@@ -85,6 +93,12 @@ protected:
 	}
 	void HookMethod4(int){
 		std::cout << "Implementation::HookMethod4(int)" << std::endl;
+	}
+	static void StaticHookMethod1(){
+		std::cout << "Implementation::StaticHookMethod1()" << std::endl;
+	}
+	static void StaticHookMethod2(){
+		std::cout << "Implementation::StaticHookMethod2()" << std::endl;
 	}
 	void NonHookMethod(){
 		std::cout << "Implementation::NonHookMethod()" << std::endl;
