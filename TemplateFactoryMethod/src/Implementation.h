@@ -17,7 +17,7 @@ template<class ConcreteApplication, class Document>
 class Implementation : public Interface {
 	using this_type = ConcreteApplication;
 
-// is_base_of<..> not possible cause of incomplete type ConreteApplication
+// is_base_of<..> it at this point not possible cause of incomplete type ConreteApplication
 //	static_assert(is_base_of<this_type, Implementation>::value, "ConcreteApplication must inherit from Implementation<ConcreteApplication>");
 //	static_assert
 //	(
