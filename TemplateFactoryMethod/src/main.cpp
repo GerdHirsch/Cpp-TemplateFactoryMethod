@@ -5,21 +5,26 @@ Gerd
 #include "Implementation.h"
 #include "Application.h"
 
+//#include<memory>
 #include<iostream>
 using namespace std;
-
-template<class T>
-size_t getAdressOf(T& t){ return reinterpret_cast<size_t>(&t);}
 
 using Impl1 = Implementation<Application, MyDocument>;
 using Impl2 = Implementation2<Application, MyDocument>;
 
+struct BrokenInvariant{ //don´t inherit from Implementation<..>
+	Implementation<BrokenInvariant, MyDocument> impl;
+};
+
 int main(){
 	cout << "=== TemplateFactoryMethod ===" << endl;
 
+//	BrokenInvariant bi;
+//	bi.impl.TemplateMethod();
+
 	Application application;
 	Interface &app = application;
-	app.printThis();
+//	app.printThis();
 
 	cout << "=== app.TemplateMethod() ===" << endl;
 	app.TemplateMethod();
@@ -28,7 +33,7 @@ int main(){
 
 	cout << hex;
 	cout 	<< "&app: " << &app
-			<< " Impl1: " << getAdressOf<Impl1>(application)
-//			<< " Impl2: " << getAdressOf<Impl2>(app)
+			<< " Impl1: " << addressof<Impl1>(application)
+//			<< " Impl2: " << addressof<Impl2>(app)
 			<< endl;
 }

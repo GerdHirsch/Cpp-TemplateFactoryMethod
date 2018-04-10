@@ -23,18 +23,21 @@ public:
 	}
 };
 
-class App2{
-
-};
-
 class Application
-		:
+		: // Invariant: inherits from ...
 		public Implementation<Application, MyDocument>
 //		, public Implementation2<Application, MyDocument>
 
 {
+	// type to access base_type ;-)
 	using base_type = Implementation<Application, MyDocument>;
 //	using base_type2 = Implementation2<Application, MyDocument>;
+
+	// Hookmethods are typically protected, (in case of dynamic polymorphism)
+	// to be overriden or called from derived classes as needed.
+	// but with CRTP it works the otherway around
+	// hence to give access to protected elements
+	// base_type must be declared as friend
 	friend base_type;
 //	friend base_type2;
 
@@ -49,35 +52,65 @@ protected:
 		return MyDocument();
 	}
 	void TemplateHookMethod(){
-		std::cout << "Application::TemplateHookMethod()" << std::endl;
-		HookMethod2();
-		base_type::HookMethod2();
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
+		// not declared and not called in base class
 		Method();
+
+		// calls overriden method
+		HookMethod2();
+		// calls base_type method
+		base_type::HookMethod2();
+
+		// calls in both cases base_type method
+		HookMethod3(); // not "overriden" shadowed
 		base_type::HookMethod3();
 	}
 
+	// there is not even a declaration in the baseclass
+	// for this method, but called via This()->AbstractHookMethod
 	void AbstractHookMethod(){
-		std::cout << "Application::AbstractHookMethod()" << std::endl;
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 	}
 
+	// not declared and not called in base class
 	void Method(){
-		std::cout << "Application::Method()" << std::endl;
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 	}
+
+	// make the overloads from base visible
+	// two overloads
 	using base_type::HookMethod2;
+	// "overrides" shadows name HookMethod2 all overloads
 	void HookMethod2(){
-		std::cout << "Application::HookMethod2()" << std::endl;
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 	}
+
+	// "overrides" shadows name HookMethod4
+	// no overloads hence no using declaration is needed
 	void HookMethod4(){
-		std::cout << "Application::HookMethod4()" << std::endl;
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 	}
-	void HookMethod4_2(){
-		std::cout << "Application::HookMethod4_2()" << std::endl;
-	}
+// static polymorphic Methods:
 	static void StaticHookMethod2(){
-		std::cout << "Application::StaticHookMethod2()" << std::endl;
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 	}
+	//static // in baseclass
+	void StaticHookMethod3(){
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
+	}
+	// Non static in baseclass
+	static void NonStaticHookMethod(){
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
+	}
+
+	// a NonHookMethod should not be redefined in
+	// derived classes, cause it yield different
+	// behavior for the same message to the same object
+	// and that´s strange
+	// similar to non-virtual Methods redefined
+	// in derived classes
 	void NonHookMethod(){
-		std::cout << "Application::NonHookMethod()" << std::endl;
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 	}
 
 };
