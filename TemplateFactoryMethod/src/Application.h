@@ -106,7 +106,7 @@ protected:
 	// a NonHookMethod should not be redefined in
 	// derived classes, cause it yield different
 	// behavior for the same message to the same object
-	// and that´s strange
+	// and thatï¿½s strange
 	// similar to non-virtual Methods redefined
 	// in derived classes
 	void NonHookMethod(){

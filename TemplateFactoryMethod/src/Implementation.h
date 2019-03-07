@@ -55,31 +55,31 @@ public:
 		// and there are different rules for static polymorphism
 		This()->AbstractHookMethod();
 
-		// not redefined in Application
-		This()->HookMethod1();
-
-		//two overloads must made visible via using .. in derived class
-		This()->HookMethod2(42);
-
-		// is redefined in Application
-		This()->HookMethod4();
-
-		// not redefined in Application
-		This()->StaticHookMethod1();
-		// is redefined in Application
-		This()->StaticHookMethod2();
-		// is redefined in Application, but not static
-		This()->StaticHookMethod3();
-		// is redefined in Application, but static
-		This()->NonStaticHookMethod();
-
-		std::cout << "---------------------------------" << std::endl;
-		Document d = This()->FactoryMethod();
-		d.operation1();
-
-		std::cout << "---------------------------------" << std::endl;
-		This()->TemplateHookMethod();
-		std::cout << "---------------------------------" << std::endl;
+//		// not redefined in Application
+//		This()->HookMethod1();
+//
+//		//two overloads must made visible via using .. in derived class
+//		This()->HookMethod2(42);
+//
+//		// is redefined in Application
+//		This()->HookMethod4();
+//
+//		// not redefined in Application
+//		This()->StaticHookMethod1();
+//		// is redefined in Application
+//		This()->StaticHookMethod2();
+//		// is redefined in Application, but not static
+//		This()->StaticHookMethod3();
+//		// is redefined in Application, but static
+//		This()->NonStaticHookMethod();
+//
+//		std::cout << "---------------------------------" << std::endl;
+//		Document d = This()->FactoryMethod();
+//		d.operation1();
+//
+//		std::cout << "---------------------------------" << std::endl;
+//		This()->TemplateHookMethod();
+//		std::cout << "---------------------------------" << std::endl;
 	}
 protected:
 	void printThis(){
@@ -88,14 +88,17 @@ protected:
 	this_type* This(){
 		static_assert
 		(
-			std::is_base_of // muss hier angewendet werden, weil der typ Implementation<..> erst hier vollständig ist
+			std::is_base_of // muss hier angewendet werden, weil der typ Implementation<..> erst hier vollstï¿½ndig ist
 				<	Implementation<ConcreteApplication, Document>,
 					ConcreteApplication
 				>::value, "ConcreteApplication must inherit from Implementation<ConcreteApplication>!"
 		);
 		return static_cast<this_type*>(this);
 	}
-
+	// the assertion fails always, nevertheless there is an AbstractHookMethod provided by the ConcreteApplication
+//	void AbstractHookMethod(){
+//		static_assert(false, "AbstractHookMethod() must be provided by ConcreteApplication");
+//	}
 	void HookMethod1(){
 		std::cout << "Implementation::HookMethod1 " << __PRETTY_FUNCTION__ << std::endl;
 	}
