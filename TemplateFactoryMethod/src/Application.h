@@ -42,6 +42,12 @@ class Application
 //	friend base_type2;
 
 public:
+	struct MyNestedType{
+		static void operation(){
+			std::cout << "Application::MyNestedType::operation " << __PRETTY_FUNCTION__ << std::endl;
+
+		}
+	};
 	void printThis(){
 		base_type::printThis();
 //		base_type2::printThis();

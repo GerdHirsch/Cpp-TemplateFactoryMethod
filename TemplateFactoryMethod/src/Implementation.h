@@ -28,11 +28,18 @@ class Implementation : public Interface {
 //	);
 
 	int i;
+	struct MyNestedType{
+		static void operation(){
+			std::cout << "Implementation::MyNestedType::operation " << __PRETTY_FUNCTION__ << std::endl;
+
+		}
+	};
 public:
 	Implementation(){
 		std::cout << "Implementation::Implementation() " << __PRETTY_FUNCTION__ << std::endl;
 		This()->StaticHookMethod1();
 		This()->StaticHookMethod2();
+//		this_type::StaticHookMethod3(); // must be static in Derived class
 	}
 	void TemplateMethod(){
 //		if(std::is_base_of
@@ -45,7 +52,7 @@ public:
 		std::cout << "---------------------------------" << std::endl;
 		// With this-> the scope of the call context is Implementation<..>
 		// and therefore the name NonHookMethod is not searched in the derived class
-		this->NonHookMethod();
+//		this->NonHookMethod();
 
 		// there not even a declaration in this class
 		// for this method
@@ -53,16 +60,18 @@ public:
 		// in case of AbstractHookMethod(), to a pure virtual one
 		// but virtual is replaced by name shadowing
 		// and there are different rules for static polymorphism
-		This()->AbstractHookMethod();
+//		This()->AbstractHookMethod();
 
 //		// not redefined in Application
 //		This()->HookMethod1();
 //
 //		//two overloads must made visible via using .. in derived class
 //		This()->HookMethod2(42);
+//		This()->HookMethod2();
 //
 //		// is redefined in Application
 //		This()->HookMethod4();
+//		this->HookMethod4();
 //
 //		// not redefined in Application
 //		This()->StaticHookMethod1();
@@ -77,9 +86,11 @@ public:
 //		Document d = This()->FactoryMethod();
 //		d.operation1();
 //
-//		std::cout << "---------------------------------" << std::endl;
-//		This()->TemplateHookMethod();
-//		std::cout << "---------------------------------" << std::endl;
+		std::cout << "---------------------------------" << std::endl;
+		This()->TemplateHookMethod();
+		std::cout << "---------------------------------" << std::endl;
+
+//		this_type::MyNestedType::operation();
 	}
 protected:
 	void printThis(){
